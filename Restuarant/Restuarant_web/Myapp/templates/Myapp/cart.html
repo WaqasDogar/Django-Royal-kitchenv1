@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Royal Kitchen</title>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+<!--
+
+Template 2076 Royal Kitchen
+
+http://www.tooplate.com/view/2076-Royal Kitchen
+
+<!===============================================================================================-->
+
+<link rel="stylesheet" href="{% static 'Myapp/css/bootstrap.min.css'%}">
+	<link rel="stylesheet" href="{% static 'Myapp/css/animate.min.css'%}">
+	<link rel="stylesheet" href="{% static 'Myapp/css/font-awesome.min.css'%}">
+	<link rel="stylesheet" href="{% static 'Myapp/css/nivo-lightbox.css'%}">
+	<link rel="stylesheet" href="{% static 'Myapp/css/nivo_themes/default/default.css'%}">
+	<link rel="stylesheet" href="{% static 'Myapp/css/style.css'%}">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'Myapp/css/utilup.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'Myapp/css/mainup.css'%}">
+</head>
+<body>
+  <!-- divider -->
+  <div class="row">
+    <div class="span12">
+      <div class="solidline"></div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="span12">
+      {% load cart_tag %}
+
+      <div class="container">
+        <h2><strong>Cart detail</strong> -Manage your cart detail from here</h2>
+        <p>Cart Customer: {{ request.user }} <br> No of Items in CART : {{request.session.cart|length}}</p>
+        <table class="table">
+          <thead>
+            <tr class="danger">
+              <th>
+                #
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                Picture
+              </th>
+              <th>
+                Price
+              </th>
+              <th>
+                Quantity
+              </th>
+              <th>
+                Total
+              </th>
+            </tr>
+          </thead>
+          <tbody>     
+            {% for key,value in request.session.cart.items %}
+            <tr class="success">
+              <td>{{forloop.counter}}</td>
+              <td>{{value.name}}</td>
+              <td><img src="{{value.image}}" height="200" width="200" ></td>
+              <td>{{value.price}}</td>
+              <td>
+                <span>
+
+                  <a href="{% url 'item_increment' value.product_id %}" class="btn btn-info"> + </a>
+
+                  <p style="margin-left: 9%;">{{value.quantity}}</p>
+
+                  <a href="{% url 'item_decrement' value.product_id %}" class="btn btn-info"> -  </a> 
+
+                </span>
+              </td>
+              <td>{{ value.price|multiply:value.quantity }}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+
+       <!-- storing data in database from cart --> 
+         <div class="wrap-login100-form-btn" style="width: 20%; float: right; margin-right: 10%;">
+          <div class="login100-form-bgbtn"></div>
+          <a href="{% url 'store' %}" class="login100-form-btn" style="margin-left: 9%;">
+            Checkout
+          </a>
+        </div>
+        <!---------------------------------------->
+
+    </div>
+  </div>
+</div>
+</body>
